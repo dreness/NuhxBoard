@@ -89,7 +89,9 @@ impl Window<NuhxBoard, Theme, Message> for Main {
             Some(icon)
         };
 
-        let level = if crate::is_always_on_top() {
+        // Get the always_on_top setting from CLI args or settings
+        // CLI args take precedence for initial window creation
+        let level = if Args::parse().always_on_top || crate::is_always_on_top() {
             window::Level::AlwaysOnTop
         } else {
             window::Level::Normal
@@ -320,6 +322,11 @@ impl Window<NuhxBoard, Theme, Message> for SettingsWindow {
             .size(15)
             .on_toggle(|_| Message::ChangeSetting(Setting::CenterMouse))
             .into(),
+            checkbox("Keep window always on top", app.settings.always_on_top)
+                .text_size(12)
+                .size(15)
+                .on_toggle(|_| Message::ChangeSetting(Setting::AlwaysOnTop))
+                .into(),
         ];
         if app.display_options.len() > 1 {
             input.push(

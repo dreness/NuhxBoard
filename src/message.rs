@@ -153,6 +153,7 @@ pub enum Setting {
     FollowForCapsSensitive,
     FollowForCapsInsensitive,
     UpdateTextPosition,
+    AlwaysOnTop,
 }
 
 impl Message {

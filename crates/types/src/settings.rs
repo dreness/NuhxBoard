@@ -24,6 +24,8 @@ pub struct Settings {
     /// Whether to update the text position of an element when it is moved in the graphical
     /// editor.
     pub update_text_position: bool,
+    /// Whether to keep the main window above other windows.
+    pub always_on_top: bool,
 }
 
 impl Default for Settings {
@@ -53,6 +55,7 @@ impl Default for Settings {
                 primary: true,
             },
             update_text_position: true,
+            always_on_top: false,
         }
     }
 }
