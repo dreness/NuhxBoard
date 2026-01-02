@@ -88,11 +88,18 @@ impl Window<NuhxBoard, Theme, Message> for Main {
             Some(icon)
         };
 
+        let level = if crate::is_always_on_top() {
+            window::Level::AlwaysOnTop
+        } else {
+            window::Level::Normal
+        };
+
         window::Settings {
             size: DEFAULT_WINDOW_SIZE,
             resizable: cfg!(debug_assertions),
             icon,
             exit_on_close_request: false,
+            level,
             ..window::Settings::default()
         }
     }
