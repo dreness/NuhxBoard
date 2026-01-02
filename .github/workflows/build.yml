@@ -76,7 +76,6 @@ jobs:
     - name: Check formatting
       if: matrix.target == 'x86_64-unknown-linux-gnu'
       run: cargo fmt --all -- --check
-      continue-on-error: true
     
     - name: Run cargo check
       run: cargo check --all-targets --target ${{ matrix.target }}

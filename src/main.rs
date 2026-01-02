@@ -36,7 +36,7 @@ struct Args {
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
     let args = Args::parse();
-    ALWAYS_ON_TOP.set(args.always_on_top).ok();
+    ALWAYS_ON_TOP.set(args.always_on_top).expect("Failed to set ALWAYS_ON_TOP flag");
     if !args.iced_tracing {
         let registry = tracing_subscriber::registry().with(tracing_subscriber::fmt::layer());
         let level = std::env::var("RUST_LOG").unwrap_or_default();
