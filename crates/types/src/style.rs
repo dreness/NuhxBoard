@@ -1,9 +1,9 @@
 use bitflags::bitflags;
 use schemars::JsonSchema;
 use serde::{
+    Deserialize, Serialize,
     de::Deserializer,
     ser::{SerializeSeq, Serializer},
-    Deserialize, Serialize,
 };
 use std::{
     collections::{HashMap, HashSet},

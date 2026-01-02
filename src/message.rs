@@ -1,6 +1,6 @@
 use crate::{nuhxboard::*, types::*, ui::popups::Action};
 use geo::Coord;
-use iced::{window, Color, Theme};
+use iced::{Color, Theme, window};
 use iced_multi_window::Window;
 use nuhxboard_types::{
     layout::SerializablePoint,

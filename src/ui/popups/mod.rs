@@ -6,8 +6,9 @@ use std::error::Error;
 
 use crate::{message::*, nuhxboard::*, types::*};
 use iced::{
+    Theme,
     widget::{button, column, container, row, text},
-    window, Theme,
+    window,
 };
 use iced_multi_window::Window;
 
@@ -104,19 +105,21 @@ impl Window<NuhxBoard, Theme, Message> for UnsavedChangesPopup {
     }
 
     fn view<'a>(&'a self, _app: &'a NuhxBoard) -> iced::Element<'a, Message, Theme> {
-        row![column![
-            text(format!(
-                "You have unsaved changes. {} will undo them. Are you sure you want to {}?",
-                self.0.present_tense(),
-                self.0.future_tense()
-            )),
-            row![
-                button("Yes").on_press(Message::Commit(self.0.clone())),
-                button("Cancel").on_press(Message::CancelDiscard(self.0.clone()))
+        row![
+            column![
+                text(format!(
+                    "You have unsaved changes. {} will undo them. Are you sure you want to {}?",
+                    self.0.present_tense(),
+                    self.0.future_tense()
+                )),
+                row![
+                    button("Yes").on_press(Message::Commit(self.0.clone())),
+                    button("Cancel").on_press(Message::CancelDiscard(self.0.clone()))
+                ]
             ]
+            .align_x(iced::Alignment::Center)
+            .width(iced::Length::Fill)
         ]
-        .align_x(iced::Alignment::Center)
-        .width(iced::Length::Fill)]
         .align_y(iced::Alignment::Center)
         .height(iced::Length::Fill)
         .into()

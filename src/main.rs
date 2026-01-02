@@ -13,9 +13,9 @@ use std::{
 use clap::Parser;
 use color_eyre::eyre::{Context, eyre};
 use nuhxboard::*;
+use std::sync::OnceLock;
 use tracing::{Level, debug, debug_span, info};
 use tracing_subscriber::{filter, prelude::*};
-use std::sync::OnceLock;
 
 static ALWAYS_ON_TOP: OnceLock<bool> = OnceLock::new();
 
@@ -36,7 +36,7 @@ struct Args {
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
     let args = Args::parse();
-    ALWAYS_ON_TOP.set(args.always_on_top).expect("Failed to set ALWAYS_ON_TOP flag");
+    ALWAYS_ON_TOP.get_or_init(|| args.always_on_top);
     if !args.iced_tracing {
         let registry = tracing_subscriber::registry().with(tracing_subscriber::fmt::layer());
         let level = std::env::var("RUST_LOG").unwrap_or_default();

@@ -1,8 +1,8 @@
 use crate::{message::*, nuhxboard::*, types::*, ui::components::*};
 use iced::{
-    never,
+    Alignment, Font, Padding, Theme, never,
     widget::{button, checkbox, column, pick_list, rich_text, row, span, text, text_input},
-    window, Alignment, Font, Padding, Theme,
+    window,
 };
 use iced_aw::{helpers::selection_list_with, number_input, selection_list};
 use iced_multi_window::Window;
@@ -1141,10 +1141,12 @@ impl Window<NuhxBoard, Theme, Message> for ElementStyle {
                         ),
                         {
                             let font = &pressed.font;
-                            rich_text![span("Pick a font")
-                                .font(font.as_iced())
-                                .underline(font.style.contains(FontStyle::UNDERLINE))
-                                .strikethrough(font.style.contains(FontStyle::STRIKETHROUGH))]
+                            rich_text![
+                                span("Pick a font")
+                                    .font(font.as_iced())
+                                    .underline(font.style.contains(FontStyle::UNDERLINE))
+                                    .strikethrough(font.style.contains(FontStyle::STRIKETHROUGH))
+                            ]
                             .on_link_click(never)
                         },
                         text_input(

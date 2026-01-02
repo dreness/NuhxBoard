@@ -1,14 +1,15 @@
 use super::{components::*, keyboard::Keyboard, popups::*};
-use crate::{message::*, nuhxboard::*, Args};
+use crate::{Args, message::*, nuhxboard::*};
 use clap::Parser;
 use iced::{
+    Background, Border, Color, Length, Theme,
     widget::{
-        checkbox, column, container, image::Handle, pick_list, radio, row, space::horizontal, text,
-        text_input, Image, Scrollable, Stack,
+        Image, Scrollable, Stack, checkbox, column, container, image::Handle, pick_list, radio,
+        row, space::horizontal, text, text_input,
     },
-    window, Background, Border, Color, Length, Theme,
+    window,
 };
-use iced_aw::{number_input, ContextMenu, SelectionList};
+use iced_aw::{ContextMenu, SelectionList, number_input};
 use iced_multi_window::Window;
 use nuhxboard_types::settings::*;
 use std::sync::Arc;

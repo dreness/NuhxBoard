@@ -27,11 +27,6 @@ jobs:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             artifact_name: nuhxboard-windows-x86_64
-          # Cross-compilation builds
-          - os: ubuntu-latest
-            target: x86_64-pc-windows-gnu
-            artifact_name: nuhxboard-windows-x86_64-gnu
-            cross: true
     
     steps:
     - uses: actions/checkout@v4
@@ -62,16 +57,10 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.target }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
     
     - name: Install system dependencies (Linux)
-      if: runner.os == 'Linux' && !matrix.cross
+      if: runner.os == 'Linux'
       run: |
         sudo apt-get update
         sudo apt-get install -y libxkbcommon-dev libwayland-dev libxdo-dev libx11-dev libxi-dev libxcursor-dev libxrandr-dev libxinerama-dev pkg-config
-    
-    - name: Install cross-compilation tools (Windows on Linux)
-      if: matrix.cross && matrix.target == 'x86_64-pc-windows-gnu'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mingw-w64
     
     - name: Check formatting
       if: matrix.target == 'x86_64-unknown-linux-gnu'
@@ -84,7 +73,6 @@ jobs:
       run: cargo build --release --target ${{ matrix.target }}
     
     - name: Run cargo test
-      if: '!matrix.cross'
       run: cargo test --target ${{ matrix.target }}
     
     - name: Prepare artifacts (Unix)
@@ -96,7 +84,7 @@ jobs:
         fi
     
     - name: Prepare artifacts (Windows)
-      if: runner.os == 'Windows' || (matrix.cross && contains(matrix.target, 'windows'))
+      if: runner.os == 'Windows'
       shell: bash
       run: |
         mkdir -p artifacts
