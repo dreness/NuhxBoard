@@ -1,6 +1,6 @@
 use geo::Coord;
 pub use ordered_float::OrderedFloat;
-use schemars::{JsonSchema, json_schema};
+use schemars::{json_schema, JsonSchema};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default, Debug, JsonSchema)]

@@ -3,13 +3,13 @@ use std::{collections::HashSet, ops::Deref};
 use colorgrad::Gradient;
 use geo::{BoundingRect, Coord, Distance, Euclidean, LineString, Polygon, Within};
 use iced::{
-    Color, Element, Event, Length, Rectangle, Renderer, Size,
-    advanced::{Renderer as _, Shell, Widget, layout::Node, widget::tree},
+    advanced::{layout::Node, widget::tree, Renderer as _, Shell, Widget},
     mouse,
     widget::{
         canvas::{self, Geometry},
         image::Handle,
     },
+    Color, Element, Event, Length, Rectangle, Renderer, Size,
 };
 use iced_graphics::geometry::{Image, Path, Renderer as _};
 use image::ImageReader;
@@ -23,7 +23,7 @@ use tracing::{debug, trace};
 
 use crate::{
     message::{Change, Message},
-    nuhxboard::{KEYBOARDS_PATH, NuhxBoard},
+    nuhxboard::{NuhxBoard, KEYBOARDS_PATH},
 };
 
 const BALL_TO_RADIUS_RATIO: f32 = 0.2;

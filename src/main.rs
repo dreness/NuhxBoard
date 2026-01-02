@@ -13,9 +13,9 @@ use std::{
 use clap::Parser;
 use color_eyre::eyre::{Context, eyre};
 use nuhxboard::*;
-use std::sync::OnceLock;
 use tracing::{Level, debug, debug_span, info};
 use tracing_subscriber::{filter, prelude::*};
+use std::sync::OnceLock;
 
 static ALWAYS_ON_TOP: OnceLock<bool> = OnceLock::new();
 

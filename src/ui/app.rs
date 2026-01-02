@@ -1,15 +1,14 @@
 use super::{components::*, keyboard::Keyboard, popups::*};
-use crate::{Args, message::*, nuhxboard::*};
+use crate::{message::*, nuhxboard::*, Args};
 use clap::Parser;
 use iced::{
-    Background, Border, Color, Length, Theme,
     widget::{
-        Image, Scrollable, Stack, checkbox, column, container, image::Handle, pick_list, radio,
-        row, space::horizontal, text, text_input,
+        checkbox, column, container, image::Handle, pick_list, radio, row, space::horizontal, text,
+        text_input, Image, Scrollable, Stack,
     },
-    window,
+    window, Background, Border, Color, Length, Theme,
 };
-use iced_aw::{ContextMenu, SelectionList, number_input};
+use iced_aw::{number_input, ContextMenu, SelectionList};
 use iced_multi_window::Window;
 use nuhxboard_types::settings::*;
 use std::sync::Arc;
@@ -89,9 +88,7 @@ impl Window<NuhxBoard, Theme, Message> for Main {
             Some(icon)
         };
 
-        // Get the always_on_top setting from CLI args or settings
-        // CLI args take precedence for initial window creation
-        let level = if Args::parse().always_on_top || crate::is_always_on_top() {
+        let level = if crate::is_always_on_top() {
             window::Level::AlwaysOnTop
         } else {
             window::Level::Normal
@@ -322,11 +319,6 @@ impl Window<NuhxBoard, Theme, Message> for SettingsWindow {
             .size(15)
             .on_toggle(|_| Message::ChangeSetting(Setting::CenterMouse))
             .into(),
-            checkbox("Keep window always on top", app.settings.always_on_top)
-                .text_size(12)
-                .size(15)
-                .on_toggle(|_| Message::ChangeSetting(Setting::AlwaysOnTop))
-                .into(),
         ];
         if app.display_options.len() > 1 {
             input.push(

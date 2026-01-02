@@ -1,10 +1,10 @@
 use crate::{message::*, types::*};
 use iced::{
-    Alignment, Background, Color, Element, Font, Length,
     font::Weight,
-    widget::{Button, Container, Row, Text, button, container, row, text, text::IntoFragment},
+    widget::{button, container, row, text, text::IntoFragment, Button, Container, Row, Text},
+    Alignment, Background, Color, Element, Font, Length,
 };
-use iced_aw::{Quad, color_picker, widget::InnerBounds};
+use iced_aw::{color_picker, widget::InnerBounds, Quad};
 pub fn labeled_text_input<'a>(
     label: impl IntoFragment<'a>,
     text_input: iced::widget::TextInput<'a, Message>,

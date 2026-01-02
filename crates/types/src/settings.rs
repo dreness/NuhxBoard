@@ -25,6 +25,7 @@ pub struct Settings {
     /// editor.
     pub update_text_position: bool,
     /// Whether to keep the main window above other windows.
+    #[serde(default)]
     pub always_on_top: bool,
 }
 
