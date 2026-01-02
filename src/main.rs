@@ -15,16 +15,28 @@ use color_eyre::eyre::{Context, eyre};
 use nuhxboard::*;
 use tracing::{Level, debug, debug_span, info};
 use tracing_subscriber::{filter, prelude::*};
+use std::sync::OnceLock;
+
+static ALWAYS_ON_TOP: OnceLock<bool> = OnceLock::new();
+
+pub fn is_always_on_top() -> bool {
+    *ALWAYS_ON_TOP.get().unwrap_or(&false)
+}
 
 #[derive(Parser)]
 struct Args {
     #[arg(long)]
     iced_tracing: bool,
+
+    /// Keep the main window above other windows (useful as an in-game overlay).
+    #[arg(long)]
+    always_on_top: bool,
 }
 
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
     let args = Args::parse();
+    ALWAYS_ON_TOP.get_or_init(|| args.always_on_top);
     if !args.iced_tracing {
         let registry = tracing_subscriber::registry().with(tracing_subscriber::fmt::layer());
         let level = std::env::var("RUST_LOG").unwrap_or_default();

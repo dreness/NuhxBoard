@@ -152,10 +152,15 @@ impl NuhxBoard {
         let mut settings_error = None;
 
         info!("Loading settings");
-        let settings: Settings = confy::load("NuhxBoard", None).unwrap_or_else(|e| {
+        let mut settings: Settings = confy::load("NuhxBoard", None).unwrap_or_else(|e| {
             settings_error = Some(NuhxBoardError::SettingsParse(Arc::new(e)));
             Settings::default()
         });
+
+        // Apply CLI flag if set
+        if crate::is_always_on_top() {
+            settings.always_on_top = true;
+        }
 
         let layout = Layout {
             version: None,
@@ -349,6 +354,17 @@ impl NuhxBoard {
                     }
                     Setting::UpdateTextPosition => {
                         self.settings.update_text_position = !self.settings.update_text_position;
+                    }
+                    Setting::AlwaysOnTop => {
+                        self.settings.always_on_top = !self.settings.always_on_top;
+                        // Update the main window's level
+                        let new_level = if self.settings.always_on_top {
+                            window::Level::AlwaysOnTop
+                        } else {
+                            window::Level::Normal
+                        };
+                        let main_window = self.main_window;
+                        return window::set_level(main_window, new_level);
                     }
                 }
             }
